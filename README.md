@@ -37,7 +37,7 @@ is weighted by coverage depth.
 
 To download this script, run:
 ```bash
-curl https://raw.githubusercontent.com/Chris-Kimmel/aggregator/main/aggregator.py > aggregator.py && chmod +x aggregator.py
+curl https://raw.githubusercontent.com/Chris-Kimmel/aggregator/master/aggregator.py > aggregator.py && chmod +x aggregator.py
 ```
 
 
