@@ -87,7 +87,13 @@ text = 'Genomic position column in REGIONS'
 regions_args.add_argument('--pos-regions', metavar='COLNAME', default='pos_0b',
     help=text)
 
+
+################################################################################
+################################## PARSE ARGS ##################################
+################################################################################
+
 args = parser.parse_args()
+region_cols = list(args.region.split(','))
 import pandas as pd # pylint: disable=wrong-import-position
 
 
@@ -121,13 +127,13 @@ del regions
 (
     merged
     .assign(weighted_term_=lambda x: x[args.stat] * x[args.covg])
-    .groupby(args.region)
+    .groupby(region_cols)
     .agg(
         sum_weight_=(args.covg, sum),
         sum_weighted_term_=('weighted_term_', sum),
     )
     .reset_index()
     .assign(**{args.stat:lambda x: x['sum_weighted_term_'] / x['sum_weight_']})
-    .loc[:, [args.region, args.stat]]
+    .loc[:, region_cols + [args.stat]]
     .to_csv(args.output_filepath, index=False)
 )
